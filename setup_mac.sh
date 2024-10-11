@@ -27,6 +27,8 @@ fi
 
 brew update
 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 # Install Homebrew Packages
 echo "Installing Homebrew packages..."
 brew install git python@3.12 gcc@13 
