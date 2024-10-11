@@ -24,3 +24,5 @@ if ! command_exists brew ; then
 else
   echo "Homebrew already installed."
 fi
+
+brew update
