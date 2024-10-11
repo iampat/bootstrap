@@ -26,3 +26,6 @@ else
 fi
 
 brew update
+
+
+echo "Done!"
