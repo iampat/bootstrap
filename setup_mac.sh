@@ -30,7 +30,30 @@ brew update
 # Install Homebrew Packages
 echo "Installing Homebrew packages..."
 brew install git python@3.12 gcc@13 
-brew install openssh tailscale
+brew install openssh 
 
+brew install tailscale
+# To start tailscale now and restart at login:
+# brew services start tailscale
+
+
+# Install Go
+echo "Installing Go..."
+GO_VERSION="1.23.2"
+ARCH=$(uname -m)
+
+if [ "$ARCH" = "arm64" ]; then
+    GO_ARCH="arm64"
+else
+    GO_ARCH="amd64"
+fi
+
+echo "Installing Go $GO_VERSION for $GO_ARCH..."
+curl -OL https://go.dev/dl/go${GO_VERSION}.darwin-${GO_ARCH}.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go${GO_VERSION}.darwin-${GO_ARCH}.tar.gz
+rm go${GO_VERSION}.darwin-${GO_ARCH}.tar.gz
+
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zprofile
 
 echo "Done!"
