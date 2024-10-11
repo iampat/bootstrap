@@ -27,8 +27,7 @@ fi
 
 brew update
 
-rm -rf $HOME/.oh-my-zsh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install Homebrew Packages
 echo "Installing Homebrew packages..."
