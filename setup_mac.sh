@@ -27,5 +27,10 @@ fi
 
 brew update
 
+# Install Homebrew Packages
+echo "Installing Homebrew packages..."
+brew install git python@3.12 gcc@13 
+brew install openssh tailscale
+
 
 echo "Done!"
