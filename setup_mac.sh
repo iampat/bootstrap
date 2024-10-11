@@ -58,7 +58,7 @@ rm go${GO_VERSION}.darwin-${GO_ARCH}.tar.gz
 
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zprofiles
 
-brew install --cask google-chromess
+brew install --cask google-chrome
 
 brew install --cask visual-studio-code
 sudo ln -sf "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
