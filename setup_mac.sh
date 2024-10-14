@@ -31,8 +31,8 @@ brew update
 
 # Install Homebrew Packages
 echo "Installing Homebrew packages..."
-brew install git python@3.12 gcc@13 
-brew install openssh 
+brew install git openssh emacs
+brew install python@3.12 gcc@13
 
 brew install tailscale
 # To start tailscale now and restart at login:
