@@ -38,6 +38,7 @@ brew install tailscale
 # To start tailscale now and restart at login:
 # brew services start tailscale
 
+brew install gh
 
 # Install Go
 echo "Installing Go..."
