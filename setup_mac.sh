@@ -66,3 +66,8 @@ code --install-extension ms-python.python
 code --install-extension golang.go
 
 echo "Setup complete! Please restart your terminal or run 'source ~/.zprofile' to apply the changes."
+
+
+# install Terraform
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
