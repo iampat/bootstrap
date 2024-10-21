@@ -71,3 +71,10 @@ echo "Setup complete! Please restart your terminal or run 'source ~/.zprofile' t
 # install Terraform
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
+
+# install gcloud cli
+curl -OL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-darwin-arm.tar.gz
+rm -rf $HOME/local/bin/google-cloud-sdk
+tar xvf google-cloud-cli-darwin-arm.tar.gz -C $HOME/local/bin 
+$HOME/local/bin/google-cloud-sdk/install.sh
+rm -rf google-cloud-cli-darwin-arm.tar.gz
