@@ -89,3 +89,6 @@ brew install kubectl
 # install node.js, npm
 brew install node
 npm install -g npm@latest
+
+# install mermaid-cli
+npm install -g @mermaid-js/mermaid-cli
