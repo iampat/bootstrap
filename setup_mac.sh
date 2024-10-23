@@ -79,6 +79,7 @@ tar xvf google-cloud-cli-darwin-arm.tar.gz -C $HOME/local/bin
 $HOME/local/bin/google-cloud-sdk/install.sh
 rm -rf google-cloud-cli-darwin-arm.tar.gz
 
-# install podman 
+# install podman and kubectl
 # TODO(iampat): Use the recommended method https://podman.io/docs/installation
 brew install podman
+brew install kubectl
