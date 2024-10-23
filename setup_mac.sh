@@ -85,3 +85,7 @@ gcloud components install gke-gcloud-auth-plugin
 # TODO(iampat): Use the recommended method https://podman.io/docs/installation
 brew install podman
 brew install kubectl
+
+# install node.js, npm
+brew install node
+npm install -g npm@latest
