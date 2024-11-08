@@ -33,6 +33,7 @@ brew update
 echo "Installing Homebrew packages..."
 brew install git openssh emacs gh jq
 brew install python@3.12 gcc@13
+brew install protobuf
 
 brew install tailscale
 # To start tailscale now and restart at login:
