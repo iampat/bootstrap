@@ -18,8 +18,8 @@ fi
 if ! command_exists brew ; then
   echo "Homebrew not found. Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  echo >> /Users/ali/.zprofile
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/ali/.zprofile
+  echo >> "${HOME}/.zprofile
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "${HOME}/.zprofile"
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
   echo "Homebrew already installed."
