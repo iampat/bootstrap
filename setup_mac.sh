@@ -27,6 +27,8 @@ fi
 
 brew update
 brew install just
+brew install bazelisk
+
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install Homebrew Packages
