@@ -95,6 +95,8 @@ brew install podman
 brew install --cask podman-desktop
 brew install kubectl
 brew install helm
+brew install iterm2
+brew install --cask slack
 
 # install node.js, npm
 brew install node
