@@ -112,3 +112,6 @@ npm install -g @anthropic-ai/claude-code
 
 # install Gemini CLI
 npm install -g @google/gemini-cli@latest
+
+
+go install github.com/bazelbuild/buildtools/buildifier@latest
