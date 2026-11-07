@@ -1,0 +1,14 @@
+[user]
+	name = YOUR NAME
+	email = you@example.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[credential]
+	helper = osxkeychain
+# Per-machine overrides (e.g. work email). Not in the repo.
+[include]
+	path = ~/.gitconfig.local
