@@ -1,6 +1,6 @@
-eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)"
 
-export EDITOR="code --wait"
+export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
 
 alias ll="ls -lah"

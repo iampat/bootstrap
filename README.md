@@ -44,9 +44,11 @@ claude/
 ## GitHub
 
 ```
-gh auth login            # browser flow, pick HTTPS
-gh auth setup-git        # git push/pull use the same token
+gh auth login            # browser flow, pick HTTPS, answer No to "authenticate Git"
 ```
+
+`git/.gitconfig` already routes github.com credentials through `gh`, so answering Yes would only
+write a machine-specific path into the symlinked file.
 
 Then set your identity in `git/.gitconfig` and commit it. For a work identity on one machine,
 put a `[user]` block in `~/.gitconfig.local`; it is included automatically and never committed.
@@ -63,5 +65,7 @@ The repo holds the names of secrets, never values. Two places for values:
   export OPENAI_API_KEY="$(security find-generic-password -s openai -w)"   # in ~/.zshrc.local
   ```
 
-Claude Code logs in via browser on first run; its token lives in `~/.claude/.credentials.json`,
-outside this repo. MCP servers that need tokens read them from the environment when `mcp.sh` runs.
+Claude Code logs in via browser on first run; its token lives in the macOS Keychain, outside this
+repo. An MCP server that needs a token takes it on its `add` line, e.g.
+`add foo -e FOO_TOKEN="${FOO_TOKEN:?export it first}" -- npx -y foo-mcp`. The value is copied into
+`~/.claude.json`, which is never committed.

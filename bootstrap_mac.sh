@@ -17,7 +17,7 @@ link() {
 }
 
 echo "==> Homebrew packages"
-brew bundle --file=Brewfile --no-upgrade
+brew bundle --file=Brewfile
 
 echo "==> Dotfiles"
 link zsh/.zshrc      "$HOME/.zshrc"

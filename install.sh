@@ -13,7 +13,8 @@ if ! command -v brew >/dev/null 2>&1; then
   echo "==> Installing Homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)"
+command -v brew >/dev/null 2>&1 || { echo "Homebrew install failed."; exit 1; }
 
 if [ -d "$DIR/.git" ]; then
   echo "==> Updating $DIR"

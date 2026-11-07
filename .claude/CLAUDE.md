@@ -8,6 +8,8 @@ the difference and never break anything.
 
 - Nothing secret goes here. No tokens, keys, `~/.claude.json`, `.credentials.json`,
   `settings.local.json`, or session history. Secrets live in `~/.zshrc.local` or Keychain.
+- `claude/settings.json` is also written by Claude Code itself (plugins, permissions, env).
+  Review `git diff claude/settings.json` before committing; never put keys in its `env` block.
 - Prefer a data line over a script line. A new app is one Brewfile line, a new setting is one
   `defaults write` in `macos.sh`, a new MCP server is one `add` line in `claude/mcp.sh`.
 - Guard every command that is not naturally idempotent (see `add()` in `claude/mcp.sh`).

@@ -34,7 +34,7 @@ check_link claude/CLAUDE.md     "$HOME/.claude/CLAUDE.md"
 check_link claude/commands      "$HOME/.claude/commands"
 check_link claude/agents        "$HOME/.claude/agents"
 check_link claude/skills        "$HOME/.claude/skills"
-[ -f "$HOME/.claude/.credentials.json" ] && ok "logged in" || warn "not logged in yet (run: claude)"
+if security find-generic-password -s "Claude Code-credentials" >/dev/null 2>&1 || [ -f "$HOME/.claude/.credentials.json" ]; then ok "logged in"; else warn "not logged in yet (run: claude)"; fi
 if command -v claude >/dev/null; then
   for name in $(grep -E '^add ' claude/mcp.sh | awk '{print $2}'); do
     claude mcp get "$name" >/dev/null 2>&1 && ok "mcp $name" || bad "mcp $name not registered"
