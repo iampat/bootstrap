@@ -8,12 +8,12 @@ Reproducible Mac setup, including Claude Code.
 /bin/bash -c "$(curl -fsSL -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/iampat/bootstrap/main/install.sh)"
 ```
 
-Installs Homebrew, clones this repo to `~/bootstrap`, runs `bootstrap_mac.sh`.
+Installs Homebrew, clones this repo to `~/workspace/iampat/bootstrap`, runs `bootstrap_mac.sh`.
 
 ## Update an existing Mac
 
 ```
-cd ~/bootstrap && git pull && ./bootstrap_mac.sh
+cd ~/workspace/iampat/bootstrap && git pull && ./bootstrap_mac.sh
 ```
 
 Everything is idempotent, so re-running only applies what changed. The other direction works

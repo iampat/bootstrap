@@ -5,7 +5,7 @@
 set -euo pipefail
 
 REPO="https://github.com/iampat/bootstrap.git"
-DIR="${BOOTSTRAP_DIR:-$HOME/bootstrap}"
+DIR="${BOOTSTRAP_DIR:-$HOME/workspace/iampat/bootstrap}"
 
 [[ "$(uname -s)" == "Darwin" ]] || { echo "macOS only."; exit 1; }
 
@@ -20,6 +20,7 @@ if [ -d "$DIR/.git" ]; then
   git -C "$DIR" pull --ff-only
 else
   echo "==> Cloning into $DIR"
+  mkdir -p "$(dirname "$DIR")"
   git clone "$REPO" "$DIR"
 fi
 
