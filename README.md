@@ -32,14 +32,19 @@ bootstrap_mac.sh    # runs everything, idempotent
 doctor.sh           # read-only health check
 Brewfile            # apps & CLI tools
 macos.sh            # defaults write ...
-zsh/.zshrc          # -> ~/.zshrc
-git/.gitconfig      # -> ~/.gitconfig
-claude/
-  settings.json     # -> ~/.claude/settings.json
-  CLAUDE.md         # -> ~/.claude/CLAUDE.md
-  commands/ agents/ skills/   # -> ~/.claude/{commands,agents,skills}
-  mcp.sh            # `claude mcp add` commands
+mcp.sh              # `claude mcp add` commands
+home/               # one folder per tool, each mirrors $HOME, linked with GNU stow
+  zsh/.zshrc
+  git/.gitconfig
+  claude/.claude/{settings.json, CLAUDE.md, commands/, agents/, skills/}
 ```
+
+To manage a new tool's config, put the file under `home/<tool>/` at the path it has in `$HOME`
+and re-run `bootstrap_mac.sh`. Nothing else to edit. Example: `home/tmux/.tmux.conf`.
+
+Stow links a whole directory when nothing exists at the target, and individual files when the
+target directory already exists. That is what keeps `~/.claude/projects` and other runtime state
+out of the repo while `~/.claude/commands` lands in it. Only put config under `home/`, never state.
 
 ## GitHub
 
@@ -47,10 +52,10 @@ claude/
 gh auth login            # browser flow, pick HTTPS, answer No to "authenticate Git"
 ```
 
-`git/.gitconfig` already routes github.com credentials through `gh`, so answering Yes would only
-write a machine-specific path into the symlinked file.
+`home/git/.gitconfig` already routes github.com credentials through `gh`, so answering Yes would
+only write a machine-specific path into the symlinked file.
 
-Then set your identity in `git/.gitconfig` and commit it. For a work identity on one machine,
+Then set your identity in `home/git/.gitconfig` and commit it. For a work identity on one machine,
 put a `[user]` block in `~/.gitconfig.local`; it is included automatically and never committed.
 
 ## Secrets
