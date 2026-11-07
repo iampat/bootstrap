@@ -65,3 +65,33 @@ The repo holds the names of secrets, never values. Two places for values:
 
 Claude Code logs in via browser on first run; its token lives in `~/.claude/.credentials.json`,
 outside this repo. MCP servers that need tokens read them from the environment when `mcp.sh` runs.
+
+## After first run, by hand
+
+- `claude` once, to log in through the browser.
+- Log out and back in so every `macos.sh` setting takes effect.
+- Sign in to the apps that were installed.
+
+## Adding things
+
+| Want | Edit |
+|---|---|
+| CLI tool or app | one line in `Brewfile` |
+| macOS setting | one `defaults write` in `macos.sh` |
+| Shell alias or env | `zsh/.zshrc` |
+| Claude command, agent, skill | file under `claude/commands`, `claude/agents`, `claude/skills` |
+| MCP server | one `add` line in `claude/mcp.sh` |
+
+Then `./bootstrap_mac.sh`, commit, push.
+
+## Never in this repo
+
+`~/.claude.json`, `~/.claude/.credentials.json`, `settings.local.json`, Claude session history,
+SSH keys, API keys, anything from `~/.zshrc.local` or `~/.gitconfig.local`.
+
+## Gotchas
+
+- `brew bundle` installs but never uninstalls. Removing a Brewfile line leaves the app in place;
+  `brew bundle cleanup` removes it, on purpose, by hand.
+- Re-runs pass `--no-upgrade`, so installed casks stay at their version. `brew upgrade` when you want.
+- Some `defaults` need Terminal to have Full Disk Access, and some only apply after logout.
