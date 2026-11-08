@@ -4,6 +4,7 @@
     "allow": [],
     "deny": []
   },
-  "model": "sonnet",
-  "advisorModel": "fable"
+  "model": "fable",
+  "advisorModel": "fable",
+  "skipWorkflowUsageWarning": true
 }
