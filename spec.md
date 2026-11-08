@@ -108,6 +108,10 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 - **Always the newest version, nothing pinned.** Homebrew, casks and the App Store only serve
   latest, and this repo adds no version pins (no `fvm`, `xcodes`, or similar). A project that
   needs a specific toolchain version pins it in its own repo.
+- **No Israeli vendors, code, or services** (companies, repos, packages, GitHub Apps, MCP
+  servers, SaaS). Treated as a security risk. A required exception needs explicit human
+  approval, per item, and is recorded here with its reason. Rule text lives in
+  `.claude/CLAUDE.md` and `home/claude/.claude/CLAUDE.md`.
 - **Manual steps are collected, not scattered.** One `manual` helper, one list at the end,
   always with the exact command to run. `doctor.sh` checks the same conditions.
 

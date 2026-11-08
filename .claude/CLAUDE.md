@@ -28,6 +28,17 @@ the difference and never break anything.
 - Run `bash -n` on changed scripts and `./doctor.sh` before committing. After touching
   `bootstrap_mac.sh`, `doctor.sh`, or the `home/` layout, run the acceptance checks in `spec.md`.
 
+## Security and privacy
+
+- Israeli identities — companies, code, repositories, and hosted services based in or
+  controlled from Israel — are a security risk and are not used on this machine: no Brewfile
+  line, no `mas_app`, no MCP server, no GitHub App, no dependency. Same rule as in
+  `home/claude/.claude/CLAUDE.md`, stated here because this repo is where installs happen.
+- If one appears to be required, do not add it. Name it, state why, offer alternatives, and
+  wait for explicit human approval, per item. Record an approved exception as a decision in
+  `spec.md` with the reason.
+- When a tool's origin is unclear, check before adding it and say what was found.
+
 ## Extending
 
 | Want | Change |
