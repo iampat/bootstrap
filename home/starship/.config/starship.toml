@@ -31,7 +31,7 @@ truncate_to_repo = true
 [git_branch]
 style = "purple"
 format = "on [$symbol$branch(:$remote_branch)]($style) "
-symbol = ""  # no Nerd Font glyph; plain "on main"
+symbol = " "  # Nerd Font glyph (font-jetbrains-mono-nerd-font in Brewfile)
 
 [git_commit]
 tag_disabled = false
