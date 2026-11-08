@@ -17,6 +17,7 @@ setopt EXTENDED_HISTORY       # store timestamps
 
 alias ll="ls -lah"
 alias g="git"
+alias emacs="emacs -nw"  # always in the terminal, never the GUI
 ta() { tmux new-session -A -s "${1:-main}"; }  # attach to a tmux session, create if missing
 
 # Prompt (config: ~/.config/starship.toml)
