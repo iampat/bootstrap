@@ -102,6 +102,7 @@ uses a throwaway `HOME` and the dotfiles block of `bootstrap_mac.sh`.
 | Empty `home/` | step skipped, no error |
 | Identity already set, re-run | prints it, asks nothing |
 | No identity, no terminal (`< /dev/null`) | prints the hint, continues |
+| Stow invocations | package names passed as a bash array, never after `--` (stow 2.4 drops them) |
 | `bash -n` on every script | clean |
 
 On a real machine after the first run: `./doctor.sh` reports no FAIL, `git status` is clean,

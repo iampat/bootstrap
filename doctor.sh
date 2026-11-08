@@ -19,8 +19,8 @@ if ! command -v stow >/dev/null; then bad "stow not installed"
 elif [ -z "$(ls home)" ]; then warn "home/ is empty"
 else
   # Dry run. Silence means every link is already in place; any output is drift or a conflict.
-  # shellcheck disable=SC2046
-  out="$(stow --dir=home --target="$HOME" --no --no-folding --verbose=1 -- $(ls home) 2>&1 | grep -v "^WARNING: in simulation mode" || true)"
+  pkgs=(); for d in home/*/; do pkgs+=("$(basename "$d")"); done
+  out="$(stow --dir=home --target="$HOME" --no --no-folding --verbose=1 "${pkgs[@]}" 2>&1 | grep -v "^WARNING: in simulation mode" || true)"
   if [ -z "$out" ]; then ok "all of home/ linked"; else bad "stow would change something:"; echo "$out" | sed 's/^/         /'; fi
 fi
 if [ -n "$(git config --global --includes user.email 2>/dev/null)" ]; then ok "git identity $(git config --global --includes user.name) <$(git config --global --includes user.email)>"

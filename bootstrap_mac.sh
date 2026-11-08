@@ -9,8 +9,8 @@ brew update
 brew bundle --file=Brewfile
 
 echo "==> Dotfiles (home/<tool>/ mirrors \$HOME, linked file by file with stow)"
-pkgs=$(ls home)
-if [ -n "$pkgs" ]; then
+pkgs=(); for d in home/*/; do pkgs+=("$(basename "$d")"); done
+if [ ${#pkgs[@]} -gt 0 ]; then
   # Walk each target path from $HOME down. Anything on the way that stow does not own would make
   # it refuse, so move it aside (.bak). A directory link of ours from an older run is removed so
   # stow can recreate it unfolded.
@@ -35,9 +35,9 @@ if [ -n "$pkgs" ]; then
   done < <(find home -mindepth 2 -type f)
   # --no-folding: never link a directory itself, so ~/.claude and friends stay real directories
   # and their runtime state stays out of the repo. --restow: drop links to files removed from repo.
-  # shellcheck disable=SC2086
-  stow --dir=home --target="$HOME" --restow --no-folding -- $pkgs
-  echo "    linked: $(echo $pkgs | tr '\n' ' ')"
+  # No "--" before the package list: stow 2.4 drops everything after it.
+  stow --dir=home --target="$HOME" --restow --no-folding "${pkgs[@]}"
+  echo "    linked: ${pkgs[*]}"
 fi
 
 echo "==> Git identity"
