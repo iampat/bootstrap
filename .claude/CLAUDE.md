@@ -33,3 +33,5 @@ the difference and never break anything.
 | Claude command / agent / skill | file under `home/claude/.claude/{commands,agents,skills}` |
 | Claude setting or hook | `home/claude/.claude/settings.json`; hook scripts in `home/claude/.claude/hooks/` |
 | MCP server | `add name ...` in `mcp.sh` |
+| Not in Homebrew (curl installer, npm -g, go install) | guarded line in `bootstrap_mac.sh`: `command -v foo >/dev/null \|\| <install>` |
+| After any change | `./bootstrap_mac.sh`, `./doctor.sh`, commit, push |
