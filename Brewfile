@@ -12,6 +12,7 @@ tap "hashicorp/tap", trusted: true  # Homebrew 7 refuses untrusted third-party t
 brew "hashicorp/tap/terraform"  # core's `terraform` formula is frozen at 1.5.7 (license change)
 brew "go-task"
 brew "uv"
+brew "fvm"  # Flutter SDK manager; the version pin lives in each project's .fvmrc, not here
 brew "cocoapods"
 brew "node"
 brew "firebase-cli"
@@ -21,5 +22,4 @@ cask "google-chrome"
 cask "iterm2"
 cask "emacs-app"
 cask "visual-studio-code"
-cask "flutter"
 cask "font-jetbrains-mono-nerd-font"  # icons for the Starship prompt; select it in iTerm2 > Profiles > Text

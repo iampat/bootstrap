@@ -105,9 +105,15 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
   degrade to manual hints and the rest of the run still happens; `doctor.sh` derives its
   checks from the same lines, as it does for `mcp.sh`. Third-party taps carry
   `trusted: true` in the Brewfile because Homebrew 7 refuses to load untrusted taps.
-- **Always the newest version, nothing pinned.** Homebrew, casks and the App Store only serve
-  latest, and this repo adds no version pins (no `fvm`, `xcodes`, or similar). A project that
-  needs a specific toolchain version pins it in its own repo.
+- **Machine tools track current stable; projects pin.** Homebrew, casks and the App Store only
+  serve their current release, so this repo cannot pin versions and does not pretend to. That
+  is accepted for machine-level tools (editors, CLIs, Xcode) as a known trade-off: every
+  `bootstrap_mac.sh` run may pull a new release, with the supply-chain and breakage risk that
+  implies. Kept in check by: sources limited to Homebrew core, official vendor taps marked
+  `trusted`, and the App Store; no curl-pipe installers except Go's official pkg; and anything
+  a project's correctness depends on (Flutter SDK, packages, Terraform providers) is pinned in
+  that project's repo and moved only through reviewed PRs, never floated. `fvm` is installed
+  here as the tool for the Flutter pin; the pin itself (`.fvmrc`) lives in the project.
 - **No Israeli vendors, code, or services** (companies, repos, packages, GitHub Apps, MCP
   servers, SaaS). Treated as a security risk. A required exception needs explicit human
   approval, per item, and is recorded here with its reason. Rule text lives in
