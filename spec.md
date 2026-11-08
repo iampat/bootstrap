@@ -53,8 +53,10 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
    reported. A directory link of ours from an older run is removed so stow can unfold it.
 3. `stow --restow --no-folding` every package. File by file, never a directory. Links to
    files no longer in the repo are removed.
-4. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
-5. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
+4. If no git identity is set, ask for name and email once and write them to
+   `~/.gitconfig.local`. Skipped with a hint when there is no terminal to ask.
+5. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
+6. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
 
 **Existing Mac** runs `git pull && ./bootstrap_mac.sh`. Same steps, mostly no-ops.
 
@@ -73,6 +75,8 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
   go on the `add` line via `${VAR:?}` and end up in `~/.claude.json`, which stays local.
 - **`gh` as git credential helper, declared in `.gitconfig`.** So `gh auth login` is never
   allowed to write an absolute, arch-specific path into the symlinked file.
+- **Git identity is per machine, asked once, stored in `~/.gitconfig.local`.** Keeps a real
+  name and email out of the public repo and lets a work Mac use a work email with no change here.
 - **Repos live in `~/workspace/<owner>/<repo>`.** This one included.
 - **`EDITOR=vim`.** Present on every Mac before anything is installed.
 - **Native Claude Code via the `claude-code` cask.** No Node dependency.
@@ -93,6 +97,8 @@ uses a throwaway `HOME` and the dotfiles block of `bootstrap_mac.sh`.
 | `~/.claude/commands/` already a real dir with user files | user files intact, repo files linked beside them |
 | New `home/foo/.config/foo/conf.toml` | linked; `~/.config` and `~/.config/foo` are real directories |
 | Empty `home/` | step skipped, no error |
+| Identity already set, re-run | prints it, asks nothing |
+| No identity, no terminal (`< /dev/null`) | prints the hint, continues |
 | `bash -n` on every script | clean |
 
 On a real machine after the first run: `./doctor.sh` reports no FAIL, `git status` is clean,

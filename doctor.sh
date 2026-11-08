@@ -23,7 +23,8 @@ else
   out="$(stow --dir=home --target="$HOME" --no --no-folding --verbose=1 -- $(ls home) 2>&1 | grep -v "^WARNING: in simulation mode" || true)"
   if [ -z "$out" ]; then ok "all of home/ linked"; else bad "stow would change something:"; echo "$out" | sed 's/^/         /'; fi
 fi
-grep -q 'YOUR NAME\|you@example.com' home/git/.gitconfig && warn "home/git/.gitconfig still has placeholder identity"
+if [ -n "$(git config --global --includes user.email 2>/dev/null)" ]; then ok "git identity $(git config --global --includes user.name) <$(git config --global --includes user.email)>"
+else warn "git identity not set (bootstrap_mac.sh asks for it, or: git config --file ~/.gitconfig.local user.email ...)"; fi
 
 echo "Claude Code"
 if command -v claude >/dev/null; then ok "claude $(claude --version 2>/dev/null | head -1)"; else bad "claude not on PATH"; fi

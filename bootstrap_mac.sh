@@ -39,6 +39,21 @@ if [ -n "$pkgs" ]; then
   echo "    linked: $(echo $pkgs | tr '\n' ' ')"
 fi
 
+echo "==> Git identity"
+if [ -z "$(git config --global --includes user.email || true)" ]; then
+  if [ -t 0 ]; then
+    read -rp "    Git name:  " git_name
+    read -rp "    Git email: " git_email
+    git config --file "$HOME/.gitconfig.local" user.name "$git_name"
+    git config --file "$HOME/.gitconfig.local" user.email "$git_email"
+    echo "    written to ~/.gitconfig.local"
+  else
+    echo "    not set and no terminal to ask; set later with: git config --file ~/.gitconfig.local user.email you@example.com"
+  fi
+else
+  echo "    $(git config --global --includes user.name) <$(git config --global --includes user.email)>"
+fi
+
 echo "==> Claude Code MCP servers"
 ./mcp.sh
 

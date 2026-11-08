@@ -57,8 +57,10 @@ gh auth login            # browser flow, pick HTTPS, answer No to "authenticate 
 `home/git/.gitconfig` already routes github.com credentials through `gh`, so answering Yes would
 only write a machine-specific path into the symlinked file.
 
-Then set your identity in `home/git/.gitconfig` and commit it. For a work identity on one machine,
-put a `[user]` block in `~/.gitconfig.local`; it is included automatically and never committed.
+`bootstrap_mac.sh` asks for your git name and email on the first run and writes them to
+`~/.gitconfig.local`, which `.gitconfig` includes and the repo never contains. So a work Mac can
+have a work email with no change here. Change it later with
+`git config --file ~/.gitconfig.local user.email you@example.com`.
 
 ## Secrets
 
