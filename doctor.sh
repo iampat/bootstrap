@@ -14,6 +14,21 @@ if command -v brew >/dev/null; then ok "brew $(brew --version | head -1 | cut -d
 if brew bundle check --file=Brewfile >/dev/null 2>&1; then ok "Brewfile satisfied"
 else bad "Brewfile has missing or outdated packages:"; brew bundle check --file=Brewfile --verbose 2>/dev/null | sed 's/^/         /'; fi
 
+echo "App Store apps"
+installed="$(mas list 2>/dev/null || true)"
+while read -r _ id name; do
+  if grep -q "^$id " <<< "$installed"; then ok "$name"
+  else bad "$name not installed: https://apps.apple.com/app/id$id  (or: sudo mas install $id)"; fi
+done < <(grep -E '^mas_app ' bootstrap_mac.sh)
+xcode_dev=/Applications/Xcode.app/Contents/Developer
+if [ -d /Applications/Xcode.app ]; then
+  ok "$("$xcode_dev/usr/bin/xcodebuild" -version 2>/dev/null | head -1)"
+  if [ "$(xcode-select -p 2>/dev/null)" = "$xcode_dev" ]; then ok "xcode-select points at Xcode.app"
+  else bad "xcode-select points at $(xcode-select -p 2>/dev/null), run: sudo xcode-select -s $xcode_dev"; fi
+  if "$xcode_dev/usr/bin/xcodebuild" -checkFirstLaunchStatus >/dev/null 2>&1; then ok "first launch done"
+  else bad "first launch pending, run: sudo xcodebuild -runFirstLaunch"; fi
+fi
+
 echo "Go"
 if [ -x /usr/local/go/bin/go ]; then ok "$(/usr/local/go/bin/go version | cut -d' ' -f3) at /usr/local/go"; else bad "go not installed at /usr/local/go"; fi
 

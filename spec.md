@@ -17,15 +17,18 @@ Scope is deliberately small: things get added when they are needed, not before.
 3. **Repo is the source of truth.** Config lives here and is symlinked into `$HOME`. Edits made
    on a machine appear as `git diff` here. Runtime state never points into the repo.
 4. **Minimal dependencies.** `install.sh` needs only macOS. `bootstrap_mac.sh` needs only
-   Homebrew and this repo, plus `sudo` once for the Go pkg.
+   Homebrew and this repo, plus `sudo` for the Go pkg and Xcode.
 5. **Drift is visible.** `doctor.sh` reports, read-only, where a machine differs from the repo.
+6. **Nothing silently stays undone.** A step the script cannot do itself (no terminal for
+   `sudo`, App Store not signed in) is listed under "Manual steps" at the end of the run and
+   reported by `doctor.sh` until done.
 
 ## Structure
 
 | Path | Role |
 |---|---|
 | `install.sh` | curl-pipe entry point: install Homebrew, clone, hand off |
-| `bootstrap_mac.sh` | the whole setup, in order: `brew bundle`, Go pkg, stow dotfiles, `mcp.sh`, `macos.sh` |
+| `bootstrap_mac.sh` | the whole setup, in order: `brew bundle`, App Store apps (`mas_app` lines) + Xcode setup, Go pkg, stow dotfiles, `mcp.sh`, `macos.sh` |
 | `doctor.sh` | read-only drift check, exit 1 on any FAIL |
 | `Brewfile` | every app and CLI tool, one line each |
 | `macos.sh` | `defaults write` lines |
@@ -49,17 +52,24 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 
 1. `brew update`, then `brew bundle --file=Brewfile`. Installs what is missing and upgrades
    what is outdated among Brewfile entries. Self-updating apps are left to their own updater.
-2. Go: if `/usr/local/go/bin/go` is missing, download the current `darwin-arm64` pkg from
+2. App Store apps: one `mas_app <id> <name>` line each. Already in `mas list` means print
+   the name. Otherwise, with a terminal, ask: `y` runs `sudo mas install`; anything else, no
+   terminal, or a failed install (App Store not signed in) puts the app's App Store link in
+   the manual steps for the user to click. Then Xcode setup if it is present:
+   `sudo xcode-select -s` to it and `sudo xcodebuild -runFirstLaunch` (guarded by
+   `-checkFirstLaunchStatus`), each a manual step when there is no terminal.
+3. Go: if `/usr/local/go/bin/go` is missing, download the current `darwin-arm64` pkg from
    go.dev and run `sudo installer`. Already installed means print the version and move on.
-3. For every file under `home/*/`, walk its target path from `$HOME` down. A real file in the
+4. For every file under `home/*/`, walk its target path from `$HOME` down. A real file in the
    way is moved to `<name>.bak.<epoch>`. A symlink not owned by this repo is removed and
    reported. A directory link of ours from an older run is removed so stow can unfold it.
-4. `stow --restow --no-folding` every package. File by file, never a directory. Links to
+5. `stow --restow --no-folding` every package. File by file, never a directory. Links to
    files no longer in the repo are removed.
-5. If no git identity is set, ask for name and email once and write them to
-   `~/.gitconfig.local`. Skipped with a hint when there is no terminal to ask.
-6. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
-7. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
+6. If no git identity is set, ask for name and email once and write them to
+   `~/.gitconfig.local`. Becomes a manual step when there is no terminal to ask.
+7. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
+8. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
+9. Manual steps collected along the way are printed as one list, with the exact commands.
 
 **Existing Mac** runs `git pull && ./bootstrap_mac.sh`. Same steps, mostly no-ops.
 
@@ -89,6 +99,17 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
   `/usr/local/go`, PATH via `/etc/paths.d/go`, `~/go/bin` added in `.zshrc`. Install-once:
   upgrading is a manual re-run of the pkg, or `sudo rm -rf /usr/local/go` then bootstrap.
   Apple silicon only; Intel Macs are not supported. Costs one `sudo` prompt on a fresh Mac.
+- **App Store apps as `mas_app` lines in the script, not `mas` lines in the Brewfile.** They
+  need an App Store sign-in and `sudo`, which the script cannot supply, and a failing `mas`
+  line makes `brew bundle` exit non-zero and abort the whole run. As guarded lines they
+  degrade to manual hints and the rest of the run still happens; `doctor.sh` derives its
+  checks from the same lines, as it does for `mcp.sh`. Third-party taps carry
+  `trusted: true` in the Brewfile because Homebrew 7 refuses to load untrusted taps.
+- **Always the newest version, nothing pinned.** Homebrew, casks and the App Store only serve
+  latest, and this repo adds no version pins (no `fvm`, `xcodes`, or similar). A project that
+  needs a specific toolchain version pins it in its own repo.
+- **Manual steps are collected, not scattered.** One `manual` helper, one list at the end,
+  always with the exact command to run. `doctor.sh` checks the same conditions.
 
 ## Acceptance checks
 
@@ -107,7 +128,12 @@ uses a throwaway `HOME` and the dotfiles block of `bootstrap_mac.sh`.
 | New `home/foo/.config/foo/conf.toml` | linked; `~/.config` and `~/.config/foo` are real directories |
 | Empty `home/` | step skipped, no error |
 | Identity already set, re-run | prints it, asks nothing |
-| No identity, no terminal (`< /dev/null`) | prints the hint, continues |
+| No identity, no terminal (`< /dev/null`) | listed under Manual steps, run continues |
+| App Store app missing, no terminal (`< /dev/null`) | not asked, App Store link listed under Manual steps, run continues to the end |
+| App Store app missing, terminal, answer `n` or Enter | link listed under Manual steps, no `sudo` |
+| App Store app already in `mas list` | prints the name, asks nothing |
+| Xcode installed, selected, first launch done | prints the version, no `sudo`, nothing listed |
+| `doctor.sh` | one line per `mas_app` line in `bootstrap_mac.sh`, FAIL with the install command when missing |
 | Stow invocations | package names passed as a bash array, never after `--` (stow 2.4 drops them) |
 | `bash -n` on every script | clean |
 
