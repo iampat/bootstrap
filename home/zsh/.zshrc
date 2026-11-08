@@ -1,6 +1,7 @@
 eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)"
 
 export EDITOR=vim
+bindkey -e  # emacs line editing (Ctrl-R history search etc.); zsh would otherwise pick vi mode because EDITOR says vim
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"  # go install binaries; /usr/local/go/bin comes from /etc/paths.d/go
 
