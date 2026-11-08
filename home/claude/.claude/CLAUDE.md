@@ -6,6 +6,8 @@
   through that repo, not directly on the machine: apps and CLI tools in `Brewfile`, tool config
   files under `home/<tool>/` at their `$HOME` path, anything else as a guarded line in
   `bootstrap_mac.sh`. Then run `./bootstrap_mac.sh` there. Its `.claude/CLAUDE.md` has the rules.
+  Delegate this work to the `bootstrap` subagent (`home/claude/.claude/agents/bootstrap.md`); it
+  knows the rules, so the main session does not need to load them.
 - Clone git repos into `~/workspace/<owner>/<repo>`, e.g. `~/workspace/iampat/bootstrap`.
   Create the parent directory if needed.
 

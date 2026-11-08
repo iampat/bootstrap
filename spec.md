@@ -125,6 +125,12 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
   servers, SaaS). Treated as a security risk. A required exception needs explicit human
   approval, per item, and is recorded here with its reason. Rule text lives in
   `.claude/CLAUDE.md` and `home/claude/.claude/CLAUDE.md`.
+- **A `bootstrap` subagent owns changes to this repo.** `home/claude/.claude/agents/bootstrap.md`
+  (linked to `~/.claude/agents/`) carries the how-to for applying the rules here: where each kind
+  of change goes, the vendor origin check, the verify-then-commit sequence, and the
+  `settings.json` rule. The main Claude session delegates machine-setup work to it so the rules
+  stay out of unrelated contexts and the work runs on a cheaper model. The rules themselves
+  stay in `.claude/CLAUDE.md` and this file; the agent reads them first.
 - **Manual steps are collected, not scattered.** One `manual` helper, one list at the end,
   always with the exact command to run. `doctor.sh` checks the same conditions.
 
