@@ -16,10 +16,10 @@ else bad "Brewfile has missing or outdated packages:"; brew bundle check --file=
 
 echo "Dotfiles"
 if ! command -v stow >/dev/null; then bad "stow not installed"
-elif [ -z "$(ls home)" ]; then warn "home/ is empty"
+elif [ -z "$(ls -A home)" ]; then warn "home/ is empty"
 else
   # Dry run. Silence means every link is already in place; any output is drift or a conflict.
-  pkgs=(); for d in home/*/; do pkgs+=("$(basename "$d")"); done
+  pkgs=(); for d in home/*/; do [ -d "$d" ] && pkgs+=("$(basename "$d")"); done
   out="$(stow --dir=home --target="$HOME" --no --no-folding --verbose=1 "${pkgs[@]}" 2>&1 | grep -v "^WARNING: in simulation mode" || true)"
   if [ -z "$out" ]; then ok "all of home/ linked"; else bad "stow would change something:"; echo "$out" | sed 's/^/         /'; fi
 fi

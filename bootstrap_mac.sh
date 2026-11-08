@@ -9,7 +9,7 @@ brew update
 brew bundle --file=Brewfile
 
 echo "==> Dotfiles (home/<tool>/ mirrors \$HOME, linked file by file with stow)"
-pkgs=(); for d in home/*/; do pkgs+=("$(basename "$d")"); done
+pkgs=(); for d in home/*/; do [ -d "$d" ] && pkgs+=("$(basename "$d")"); done
 if [ ${#pkgs[@]} -gt 0 ]; then
   # Walk each target path from $HOME down. Anything on the way that stow does not own would make
   # it refuse, so move it aside (.bak). A directory link of ours from an older run is removed so
