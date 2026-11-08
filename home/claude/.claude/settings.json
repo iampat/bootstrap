@@ -3,5 +3,7 @@
   "permissions": {
     "allow": [],
     "deny": []
-  }
+  },
+  "model": "sonnet",
+  "advisorModel": "fable"
 }
