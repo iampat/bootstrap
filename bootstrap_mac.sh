@@ -5,6 +5,7 @@ cd "$(dirname "$0")"
 eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)"
 
 echo "==> Homebrew packages"
+brew update
 brew bundle --file=Brewfile
 
 echo "==> Dotfiles (home/<tool>/ mirrors \$HOME, linked file by file with stow)"

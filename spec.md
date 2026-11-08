@@ -47,7 +47,8 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 
 **`bootstrap_mac.sh`**, from the repo root:
 
-1. `brew bundle --file=Brewfile`. Installs what is missing and upgrades what is outdated.
+1. `brew update`, then `brew bundle --file=Brewfile`. Installs what is missing and upgrades
+   what is outdated among Brewfile entries. Self-updating apps are left to their own updater.
 2. For every file under `home/*/`, walk its target path from `$HOME` down. A real file in the
    way is moved to `<name>.bak.<epoch>`. A symlink not owned by this repo is removed and
    reported. A directory link of ours from an older run is removed so stow can unfold it.
@@ -67,8 +68,10 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 - **`--no-folding`.** A folded `~/.claude` link would put credentials and transcripts inside the
   repo the first time `claude` runs. File-by-file linking costs one thing: a command or skill
   created directly in `~/.claude/commands` stays local until copied into the repo.
-- **`brew bundle` upgrades.** A sync means "fully current". `doctor.sh` treats outdated as
-  unsatisfied, so the two agree. `brew bundle` never uninstalls; removal is manual on purpose.
+- **`brew update` then `brew bundle`, which upgrades.** A sync means "fully current", and the
+  explicit update makes that true on every run, not only when Homebrew's 24-hour auto-update
+  fires. `doctor.sh` treats outdated as unsatisfied, so the two agree. Nothing is uninstalled;
+  removal is manual on purpose. Hand-installed tools are not upgraded, so they stay visible.
 - **Public repo.** Keeps the curl one-liner working. The price is reviewing `git diff` of
   `home/claude/.claude/settings.json`, which Claude Code also writes, before each commit.
 - **Secrets in `~/.zshrc.local` or Keychain.** The repo names them, never holds them. MCP tokens
