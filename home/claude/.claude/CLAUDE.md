@@ -10,6 +10,12 @@
   knows the rules, so the main session does not need to load them.
 - Clone git repos into `~/workspace/<owner>/<repo>`, e.g. `~/workspace/iampat/bootstrap`.
   Create the parent directory if needed.
+- Claude is normally launched from `~/workspace`. When asked to work on a project under
+  `~/workspace/<owner>/<repo>` and the session is not rooted there, first ask the user to run
+  `/cd ~/workspace/<owner>/<repo>`. That loads the project's `CLAUDE.md`, `AGENTS.md`,
+  `.claude/skills`, settings, and hooks as if Claude had been started there. A Bash `cd` does
+  not load any of that, so never treat it as a substitute. If the user declines, read the
+  project's `CLAUDE.md` or `AGENTS.md` and list its `.claude/skills` before the first edit.
 
 ## Security and privacy
 
