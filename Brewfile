@@ -1,6 +1,8 @@
 # Apps & CLI tools. Applied with `brew bundle`. Add a line, re-run bootstrap_mac.sh.
 brew "git"
 brew "gh"
+brew "bash"  # bash-completion@2 needs bash >= 4.2; /bin/bash is 3.2. zsh stays the login shell (see spec.md)
+brew "bash-completion@2"  # tab completion in bash for git, gh and every Homebrew tool that ships one; loaded by home/bash/.bashrc
 brew "stow"
 brew "tmux"
 brew "starship"

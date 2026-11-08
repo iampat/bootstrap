@@ -39,8 +39,8 @@ Scope is deliberately small: things get added when they are needed, not before.
 | `home/claude/.claude/CLAUDE.md` | global Claude instructions, linked to `~/.claude/CLAUDE.md` |
 | `spec.md` | this file |
 
-Machine-local escape hatches, never committed: `~/.zshrc.local`, `~/.gitconfig.local`,
-`~/.claude/settings.local.json`, `~/.claude.json`.
+Machine-local escape hatches, never committed: `~/.zshrc.local`, `~/.bashrc.local`,
+`~/.gitconfig.local`, `~/.claude/settings.local.json`, `~/.claude.json`.
 
 ## Flow
 
@@ -94,6 +94,13 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
   name and email out of the public repo and lets a work Mac use a work email with no change here.
 - **Repos live in `~/workspace/<owner>/<repo>`.** This one included.
 - **`EDITOR=vim`.** Present on every Mac before anything is installed.
+- **zsh is the shell; bash is kept usable.** `home/bash/.bashrc` (plus a one-line
+  `.bash_profile` that sources it) gives an interactive `bash` Homebrew on PATH and tab
+  completion for git, gh and every Homebrew tool that ships a completion, through
+  `bash-completion@2`. That package needs bash 4.2 or newer, so Homebrew `bash` is in the
+  Brewfile; `brew shellenv` puts it ahead of the 3.2 `/bin/bash`, which stays untouched (no
+  `chsh`). On an old bash the file falls back to git's own completion script and
+  `gh completion -s bash`. Machine-specific bash settings go in `~/.bashrc.local`.
 - **Native Claude Code via the `claude-code` cask.** No Node dependency.
 - **Go from the official go.dev pkg, not Homebrew.** Follows go.dev/doc/install exactly:
   `/usr/local/go`, PATH via `/etc/paths.d/go`, `~/go/bin` added in `.zshrc`. Install-once:
