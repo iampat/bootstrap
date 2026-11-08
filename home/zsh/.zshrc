@@ -6,6 +6,7 @@ export PATH="$PATH:$HOME/go/bin"  # go install binaries; /usr/local/go/bin comes
 
 alias ll="ls -lah"
 alias g="git"
+ta() { tmux new-session -A -s "${1:-main}"; }  # attach to a tmux session, create if missing
 
 # Machine-specific / secret stuff lives outside the repo.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
