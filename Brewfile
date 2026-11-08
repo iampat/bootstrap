@@ -19,6 +19,12 @@ brew "cocoapods"
 brew "node"
 brew "firebase-cli"
 
+# cloudy-neigh (Go + Bazel) toolchain
+brew "bazelisk"  # reads .bazelversion and downloads the pinned Bazel; Go, Python, protoc come via MODULE.bazel
+brew "hf"  # Hugging Face CLI; `task download-dataset` pulls the Cohere Wikipedia benchmark set
+cask "gcloud-cli"  # GCS benchmark runs in benchmark/Taskfile.yaml (project kentrolabs-ai)
+cask "antigravity-cli"  # Google Antigravity CLI, installs `agy`; drives the consult-* Claude skills
+
 cask "claude-code"
 cask "google-chrome"
 cask "iterm2"
