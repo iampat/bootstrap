@@ -17,7 +17,7 @@ Scope is deliberately small: things get added when they are needed, not before.
 3. **Repo is the source of truth.** Config lives here and is symlinked into `$HOME`. Edits made
    on a machine appear as `git diff` here. Runtime state never points into the repo.
 4. **Minimal dependencies.** `install.sh` needs only macOS. `bootstrap_mac.sh` needs only
-   Homebrew and this repo.
+   Homebrew and this repo, plus `sudo` once for the Go pkg.
 5. **Drift is visible.** `doctor.sh` reports, read-only, where a machine differs from the repo.
 
 ## Structure
@@ -25,7 +25,7 @@ Scope is deliberately small: things get added when they are needed, not before.
 | Path | Role |
 |---|---|
 | `install.sh` | curl-pipe entry point: install Homebrew, clone, hand off |
-| `bootstrap_mac.sh` | the whole setup, in order: `brew bundle`, stow dotfiles, `mcp.sh`, `macos.sh` |
+| `bootstrap_mac.sh` | the whole setup, in order: `brew bundle`, Go pkg, stow dotfiles, `mcp.sh`, `macos.sh` |
 | `doctor.sh` | read-only drift check, exit 1 on any FAIL |
 | `Brewfile` | every app and CLI tool, one line each |
 | `macos.sh` | `defaults write` lines |
@@ -49,15 +49,17 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 
 1. `brew update`, then `brew bundle --file=Brewfile`. Installs what is missing and upgrades
    what is outdated among Brewfile entries. Self-updating apps are left to their own updater.
-2. For every file under `home/*/`, walk its target path from `$HOME` down. A real file in the
+2. Go: if `/usr/local/go/bin/go` is missing, download the current `darwin-arm64` pkg from
+   go.dev and run `sudo installer`. Already installed means print the version and move on.
+3. For every file under `home/*/`, walk its target path from `$HOME` down. A real file in the
    way is moved to `<name>.bak.<epoch>`. A symlink not owned by this repo is removed and
    reported. A directory link of ours from an older run is removed so stow can unfold it.
-3. `stow --restow --no-folding` every package. File by file, never a directory. Links to
+4. `stow --restow --no-folding` every package. File by file, never a directory. Links to
    files no longer in the repo are removed.
-4. If no git identity is set, ask for name and email once and write them to
+5. If no git identity is set, ask for name and email once and write them to
    `~/.gitconfig.local`. Skipped with a hint when there is no terminal to ask.
-5. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
-6. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
+6. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
+7. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
 
 **Existing Mac** runs `git pull && ./bootstrap_mac.sh`. Same steps, mostly no-ops.
 
@@ -83,6 +85,10 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 - **Repos live in `~/workspace/<owner>/<repo>`.** This one included.
 - **`EDITOR=vim`.** Present on every Mac before anything is installed.
 - **Native Claude Code via the `claude-code` cask.** No Node dependency.
+- **Go from the official go.dev pkg, not Homebrew.** Follows go.dev/doc/install exactly:
+  `/usr/local/go`, PATH via `/etc/paths.d/go`, `~/go/bin` added in `.zshrc`. Install-once:
+  upgrading is a manual re-run of the pkg, or `sudo rm -rf /usr/local/go` then bootstrap.
+  Apple silicon only; Intel Macs are not supported. Costs one `sudo` prompt on a fresh Mac.
 
 ## Acceptance checks
 

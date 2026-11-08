@@ -14,6 +14,9 @@ if command -v brew >/dev/null; then ok "brew $(brew --version | head -1 | cut -d
 if brew bundle check --file=Brewfile >/dev/null 2>&1; then ok "Brewfile satisfied"
 else bad "Brewfile has missing or outdated packages:"; brew bundle check --file=Brewfile --verbose 2>/dev/null | sed 's/^/         /'; fi
 
+echo "Go"
+if [ -x /usr/local/go/bin/go ]; then ok "$(/usr/local/go/bin/go version | cut -d' ' -f3) at /usr/local/go"; else bad "go not installed at /usr/local/go"; fi
+
 echo "Dotfiles"
 if ! command -v stow >/dev/null; then bad "stow not installed"
 elif [ -z "$(ls -A home)" ]; then warn "home/ is empty"

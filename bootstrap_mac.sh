@@ -8,6 +8,17 @@ echo "==> Homebrew packages"
 brew update
 brew bundle --file=Brewfile
 
+echo "==> Go (official pkg from go.dev, Apple silicon only)"
+if [ -x /usr/local/go/bin/go ]; then
+  echo "    $(/usr/local/go/bin/go version)"
+else
+  ver=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -1)
+  pkg="$(mktemp -d)/$ver.darwin-arm64.pkg"
+  curl -fsSL "https://go.dev/dl/$ver.darwin-arm64.pkg" -o "$pkg"
+  sudo installer -pkg "$pkg" -target /
+  echo "    installed $ver to /usr/local/go"
+fi
+
 echo "==> Dotfiles (home/<tool>/ mirrors \$HOME, linked file by file with stow)"
 pkgs=(); for d in home/*/; do [ -d "$d" ] && pkgs+=("$(basename "$d")"); done
 if [ ${#pkgs[@]} -gt 0 ]; then

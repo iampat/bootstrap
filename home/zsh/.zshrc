@@ -2,6 +2,7 @@ eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shell
 
 export EDITOR=vim
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin"  # go install binaries; /usr/local/go/bin comes from /etc/paths.d/go
 
 alias ll="ls -lah"
 alias g="git"
