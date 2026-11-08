@@ -19,5 +19,8 @@ alias ll="ls -lah"
 alias g="git"
 ta() { tmux new-session -A -s "${1:-main}"; }  # attach to a tmux session, create if missing
 
+# Prompt (config: ~/.config/starship.toml)
+command -v starship >/dev/null && eval "$(starship init zsh)"
+
 # Machine-specific / secret stuff lives outside the repo.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
