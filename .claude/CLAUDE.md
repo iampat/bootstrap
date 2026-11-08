@@ -4,7 +4,12 @@ This repo sets up a Mac from scratch and keeps it in sync. Every script must sta
 running `bootstrap_mac.sh` twice, or on a machine set up from an older commit, must only apply
 the difference and never break anything.
 
+`spec.md` states the guarantees, structure, flow, decisions, and acceptance checks. Read it first.
+
 ## Rules
+
+- Any change to behavior, layout, or a decision updates `spec.md` in the same commit. When
+  reviewing, check the code and `spec.md` against each other and report any disagreement.
 
 - Nothing secret goes here. No tokens, keys, `~/.claude.json`, `.credentials.json`,
   `settings.local.json`, or session history. Secrets live in `~/.zshrc.local` or Keychain.
@@ -20,7 +25,8 @@ the difference and never break anything.
 - Everything `bootstrap_mac.sh` needs in order to run comes from Homebrew or this repo. A tool
   Homebrew lacks is installed by a guarded line in it, never by hand on the machine.
 - Keep `install.sh` tiny. It only needs to get Homebrew, clone, and hand off.
-- Run `bash -n` on changed scripts and `./doctor.sh` before committing.
+- Run `bash -n` on changed scripts and `./doctor.sh` before committing. After touching
+  `bootstrap_mac.sh`, `doctor.sh`, or the `home/` layout, run the acceptance checks in `spec.md`.
 
 ## Extending
 

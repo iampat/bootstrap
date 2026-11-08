@@ -30,6 +30,7 @@ here. Commit, push, pull on the next machine.
 install.sh          # curl'd one-liner: brew + clone + hand off
 bootstrap_mac.sh    # runs everything, idempotent
 doctor.sh           # read-only health check
+spec.md             # guarantees, decisions, acceptance checks
 Brewfile            # apps & CLI tools
 macos.sh            # defaults write ...
 mcp.sh              # `claude mcp add` commands
