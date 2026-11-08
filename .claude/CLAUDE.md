@@ -13,10 +13,12 @@ the difference and never break anything.
 - Prefer a data line over a script line. A new app is one Brewfile line, a new setting is one
   `defaults write` in `macos.sh`, a new MCP server is one `add` line in `mcp.sh`, a new dotfile
   is one file under `home/`.
-- `home/<tool>/` mirrors `$HOME` and is linked by GNU stow. Put config there, never runtime state.
-  Stow links a directory whole if nothing exists at the target, otherwise file by file.
+- `home/<tool>/` mirrors `$HOME` and is linked file by file by GNU stow (`--no-folding`), so a
+  directory like `~/.claude` that also holds runtime state never points into the repo. Keep it
+  that way. Put config under `home/`, never state.
 - Guard every command that is not naturally idempotent (see `add()` in `mcp.sh`).
-- `bootstrap_mac.sh` must not depend on anything outside Homebrew and this repo.
+- Everything `bootstrap_mac.sh` needs in order to run comes from Homebrew or this repo. A tool
+  Homebrew lacks is installed by a guarded line in it, never by hand on the machine.
 - Keep `install.sh` tiny. It only needs to get Homebrew, clone, and hand off.
 - Run `bash -n` on changed scripts and `./doctor.sh` before committing.
 

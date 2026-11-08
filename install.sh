@@ -18,7 +18,7 @@ command -v brew >/dev/null 2>&1 || { echo "Homebrew install failed."; exit 1; }
 
 if [ -d "$DIR/.git" ]; then
   echo "==> Updating $DIR"
-  git -C "$DIR" pull --ff-only
+  git -C "$DIR" pull --ff-only || { echo "Local changes in $DIR. Resolve them, then run ./bootstrap_mac.sh"; exit 1; }
 else
   echo "==> Cloning into $DIR"
   mkdir -p "$(dirname "$DIR")"

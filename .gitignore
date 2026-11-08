@@ -1,0 +1,10 @@
+.DS_Store
+*.bak.*
+# Safety net: Claude Code runtime state must never be committed, even if ~/.claude ever points here.
+home/claude/.claude/*
+!home/claude/.claude/settings.json
+!home/claude/.claude/CLAUDE.md
+!home/claude/.claude/commands/
+!home/claude/.claude/agents/
+!home/claude/.claude/skills/
+!home/claude/.claude/hooks/

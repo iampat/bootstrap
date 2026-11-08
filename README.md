@@ -42,9 +42,10 @@ home/               # one folder per tool, each mirrors $HOME, linked with GNU s
 To manage a new tool's config, put the file under `home/<tool>/` at the path it has in `$HOME`
 and re-run `bootstrap_mac.sh`. Nothing else to edit. Example: `home/tmux/.tmux.conf`.
 
-Stow links a whole directory when nothing exists at the target, and individual files when the
-target directory already exists. That is what keeps `~/.claude/projects` and other runtime state
-out of the repo while `~/.claude/commands` lands in it. Only put config under `home/`, never state.
+Stow links file by file, never a directory, so `~/.claude` stays a real directory and its runtime
+state (credentials, session history) never points into this repo. The flip side: a command or
+skill you create directly in `~/.claude/commands` stays on that machine until you copy it into
+`home/claude/.claude/commands/`. Only put config under `home/`, never state.
 
 ## GitHub
 
