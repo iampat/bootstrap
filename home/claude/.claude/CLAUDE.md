@@ -10,6 +10,10 @@
   knows the rules, so the main session does not need to load them.
 - Clone git repos into `~/workspace/<owner>/<repo>`, e.g. `~/workspace/iampat/bootstrap`.
   Create the parent directory if needed.
+- Put git worktrees in `<repo>/.worktree/<name>`, e.g. `git worktree add .worktree/pr-175 pr-175`.
+  Never create a worktree as a sibling of the repo. It clutters `~/workspace/<owner>/`. When a
+  repo first uses `.worktree`, add it to `.gitignore`, and to `.bazelignore` if the repo has one.
+  Do this on a branch and PR in that repo, per its rules.
 - Claude is normally launched from `~/workspace`. When asked to work on a project under
   `~/workspace/<owner>/<repo>` and the session is not rooted there, first ask the user to run
   `/cd ~/workspace/<owner>/<repo>`. That loads the project's `CLAUDE.md`, `AGENTS.md`,
