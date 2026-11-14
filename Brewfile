@@ -28,6 +28,6 @@ cask "antigravity-cli"  # Google Antigravity CLI, installs `agy`; drives the con
 cask "claude-code"
 cask "google-chrome"
 cask "iterm2"
-cask "emacs-app"
+brew "emacs"  # terminal Emacs (zshrc aliases emacs to -nw); the emacs-app cask downloads from emacsformacosx.com, which times out and hangs brew bundle
 cask "visual-studio-code"
 cask "font-jetbrains-mono-nerd-font"  # icons for the Starship prompt; select it in iTerm2 > Profiles > Text
