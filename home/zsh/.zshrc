@@ -15,11 +15,15 @@ setopt HIST_IGNORE_ALL_DUPS   # keep only the latest copy of a repeated command
 setopt HIST_IGNORE_SPACE      # a leading space keeps a command out of history
 setopt HIST_REDUCE_BLANKS
 setopt EXTENDED_HISTORY       # store timestamps
+unsetopt BEEP                 # no terminal bell on Tab with ambiguous/no match
 
 alias ll="ls -lah"
 alias g="git"
 alias emacs="emacs -nw"  # always in the terminal, never the GUI
 ta() { tmux new-session -A -s "${1:-main}"; }  # attach to a tmux session, create if missing
+
+# Tab completion (git, gh, ... from Homebrew's site-functions on fpath)
+autoload -Uz compinit && compinit
 
 # Prompt (config: ~/.config/starship.toml)
 command -v starship >/dev/null && eval "$(starship init zsh)"
