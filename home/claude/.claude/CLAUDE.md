@@ -16,6 +16,8 @@
   `.claude/skills`, settings, and hooks as if Claude had been started there. A Bash `cd` does
   not load any of that, so never treat it as a substitute. If the user declines, read the
   project's `CLAUDE.md` or `AGENTS.md` and list its `.claude/skills` before the first edit.
+- When the user starts working on a different project or session, suggest they switch to (or
+  create) a matching tmux window, so each project or session has its own tmux window.
 
 ## Security and privacy
 
