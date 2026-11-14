@@ -17,7 +17,7 @@ else bad "Brewfile has missing or outdated packages:"; brew bundle check --file=
 echo "App Store apps"
 installed="$(mas list 2>/dev/null || true)"
 while read -r _ id name; do
-  if grep -q "^$id " <<< "$installed"; then ok "$name"
+  if grep -Eq "^ *$id " <<< "$installed"; then ok "$name"
   else bad "$name not installed: https://apps.apple.com/app/id$id  (or: sudo mas install $id)"; fi
 done < <(grep -E '^mas_app ' bootstrap_mac.sh)
 xcode_dev=/Applications/Xcode.app/Contents/Developer

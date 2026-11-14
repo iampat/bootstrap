@@ -20,7 +20,7 @@ echo "==> App Store apps"
 # means the link goes to the manual steps. doctor.sh reads these lines.
 mas_app() {
   local id=$1 name=$2 url="https://apps.apple.com/app/id$1" yn=""
-  if mas list 2>/dev/null | grep -q "^$id "; then echo "    $name"; return; fi
+  if mas list 2>/dev/null | grep -Eq "^ *$id "; then echo "    $name"; return; fi
   if [ -t 0 ]; then
     read -rp "    $name is missing. Install it now with mas (needs sudo)? [y/N] " yn
     if [[ "$yn" =~ ^[Yy] ]] && sudo mas install "$id"; then echo "    installed $name"; return; fi
