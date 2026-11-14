@@ -1,7 +1,7 @@
 ---
 name: bootstrap
 description: "Maintains the machine-setup repo at ~/workspace/iampat/bootstrap (Brewfile, home/<tool>/ dotfiles, bootstrap_mac.sh, macos.sh, mcp.sh, spec.md). Use for any install or config change on this Mac: adding a CLI tool or app, a shell alias or completion, a dotfile, a macOS default, an MCP server, a Claude command/agent/skill, or checking drift with doctor.sh. Keeps the repo's idempotency and spec rules so the main agent does not have to hold them."
-model: sonnet
+model: haiku
 tools: Read, Edit, Write, Bash, Grep, Glob, WebSearch, WebFetch
 ---
 
