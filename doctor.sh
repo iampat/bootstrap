@@ -53,6 +53,18 @@ if command -v claude >/dev/null; then
   done
 fi
 
+echo "Manual settings"
+iterm_font="$(defaults export com.googlecode.iterm2 - 2>/dev/null | plutil -extract 'New Bookmarks.0.Normal Font' raw -o - - 2>/dev/null || true)"
+if [ -n "$iterm_font" ] && [[ "$iterm_font" != *JetBrainsMono* ]]; then
+  warn "iTerm2 font is $iterm_font: select JetBrainsMono Nerd Font in iTerm2 > Settings > Profiles > Text"
+fi
+if tmux ls >/dev/null 2>&1; then
+  tmux_want="$(awk '$1=="set" && $2=="-g" && $3=="prefix" {print $4}' ~/.tmux.conf 2>/dev/null)"
+  if [ -n "$tmux_want" ] && [ "$(tmux show -gv prefix 2>/dev/null)" != "$tmux_want" ]; then
+    warn "tmux server runs with an old config: tmux source-file ~/.tmux.conf"
+  fi
+fi
+
 echo "Repo"
 if [ -n "$(git status --porcelain)" ]; then warn "uncommitted changes in $PWD"; else ok "working tree clean"; fi
 if git fetch -q origin 2>/dev/null && git rev-parse -q --verify '@{u}' >/dev/null 2>&1; then

@@ -70,6 +70,9 @@ if that did not produce `brew`, clones to `~/workspace/iampat/bootstrap` (or pul
 7. `mcp.sh`: each `add` line registers a server only if `claude mcp get` does not find it.
 8. `macos.sh`: `defaults write` lines, then restart Finder and Dock.
 9. Manual steps collected along the way are printed as one list, with the exact commands.
+   Two are conditions rather than failures: iTerm2's default profile font does not contain
+   `JetBrainsMono` (skipped when iTerm2 has no prefs), and a running tmux server whose prefix
+   differs from `set -g prefix` in `~/.tmux.conf` (skipped when no server runs). Silent once fixed.
 
 **Existing Mac** runs `git pull && ./bootstrap_mac.sh`. Same steps, mostly no-ops.
 
@@ -156,6 +159,7 @@ uses a throwaway `HOME` and the dotfiles block of `bootstrap_mac.sh`.
 | App Store app missing, no terminal (`< /dev/null`) | not asked, App Store link listed under Manual steps, run continues to the end |
 | App Store app missing, terminal, answer `n` or Enter | link listed under Manual steps, no `sudo` |
 | App Store app already in `mas list` | prints the name, asks nothing |
+| iTerm2 font not JetBrainsMono / tmux server prefix differs from `~/.tmux.conf` | listed under Manual steps and warned by `doctor.sh`; nothing when satisfied or when iTerm2 prefs / tmux server are absent |
 | Xcode installed, selected, first launch done | prints the version, no `sudo`, nothing listed |
 | `doctor.sh` | one line per `mas_app` line in `bootstrap_mac.sh`, FAIL with the install command when missing |
 | Stow invocations | package names passed as a bash array, never after `--` (stow 2.4 drops them) |

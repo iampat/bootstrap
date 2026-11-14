@@ -111,6 +111,18 @@ echo "==> Claude Code MCP servers"
 echo "==> macOS defaults"
 ./macos.sh
 
+# Silent when satisfied. doctor.sh checks the same conditions.
+iterm_font="$(defaults export com.googlecode.iterm2 - 2>/dev/null | plutil -extract 'New Bookmarks.0.Normal Font' raw -o - - 2>/dev/null || true)"
+if [ -n "$iterm_font" ] && [[ "$iterm_font" != *JetBrainsMono* ]]; then
+  manual "select JetBrainsMono Nerd Font in iTerm2 > Settings > Profiles > Text (Starship prompt icons)"
+fi
+if tmux ls >/dev/null 2>&1; then
+  tmux_want="$(awk '$1=="set" && $2=="-g" && $3=="prefix" {print $4}' ~/.tmux.conf 2>/dev/null)"
+  if [ -n "$tmux_want" ] && [ "$(tmux show -gv prefix 2>/dev/null)" != "$tmux_want" ]; then
+    manual "tmux server runs with an old config: tmux source-file ~/.tmux.conf   (or tmux kill-server, ends all sessions)"
+  fi
+fi
+
 if [ ${#manual_steps[@]} -gt 0 ]; then
   echo "==> Manual steps (this script could not do these; run them, then re-run ./bootstrap_mac.sh)"
   for s in "${manual_steps[@]}"; do echo "    - $s"; done
