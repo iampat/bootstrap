@@ -30,6 +30,7 @@ cask "google-chrome"
 cask "iterm2"
 brew "emacs"  # terminal Emacs (zshrc aliases emacs to -nw); the emacs-app cask downloads from emacsformacosx.com, which times out and hangs brew bundle
 cask "visual-studio-code"
+cask "t3-code"  # T3 Code (t3.codes), minimal GUI for coding agents; Homebrew core cask, vendor T3.gg (Theo Browne), no Israeli link found
 cask "font-jetbrains-mono-nerd-font"  # icons for the Starship prompt; select it in iTerm2 > Profiles > Text
 brew "watch"  # repeat a command and show its output
 brew "dust"  # disk usage tree, du replacement
