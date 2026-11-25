@@ -33,3 +33,16 @@
   alternatives, and wait for explicit human approval. Approval is per item, not blanket.
 - When the origin of a vendor or package is unclear, check before adopting it and say what was
   found.
+
+## Current Gemini Models & Applications
+
+Prefer current-generation Gemini 3.x / 4.x models over legacy 2.5 models:
+
+| Category | Model IDs | Recommended Application |
+|---|---|---|
+| **Reasoning & Coding (Gen 4)** | `gemini-4-carbon`, `gemini-4-argon`, `gemini-4-hydrogen` | Architecture, complex reasoning, coding, and agentic orchestration |
+| **Fast Text & Multimodal (Gen 3.x)** | `gemini-3.8-flash`, `gemini-3.5-flash`, `gemini-omni-1.2-flash`, `gemini-3.1-pro-preview` | High-throughput text, vision, and multimodal tasks |
+| **Speech / Voiceover (TTS)** | `gemini-3.8-flash-tts`, `gemini-3.8-flash-lite-tts`, `gemini-3.1-flash-tts-preview` | Natural single- or multi-speaker voice generation with style/emotion prompting |
+| **Audio Transcription** | `gemini-3.5-transcribe` | Speech-to-text transcription |
+| **Image Generation (Nano Banana)** | `gemini-nano-banana-2.1`, `nano-banana-pro-preview`, `gemini-3.1-flash-image`, `gemini-3-pro-image` | Photorealistic image generation and editing |
+| **Music & Ambient Audio** | `lyria-3.5`, `lyria-3-pro-preview`, `lyria-3-clip-preview` | Background music and instrumental audio generation |
